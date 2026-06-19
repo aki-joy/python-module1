@@ -1,8 +1,8 @@
-class Plant:        
+class Plant:
     def __init__(self, name: str, height: int, age: int):
         self.name = name
-        self.height = 0
-        self.age = 0
+        self._height = 0
+        self._age = 0
         self.set_height(height, False)
         self.set_age(age, False)
 
@@ -12,9 +12,9 @@ class Plant:
             if show_message:
                 print("Height update rejected")
             return
-        self.height = height
+        self._height = height
         if show_message:
-            print(f"Height updated: {self.height}cm")
+            print(f"Height updated: {self._height}cm")
 
     def set_age(self, age: int, show_message: bool = True) -> None:
         if age < 0:
@@ -22,30 +22,29 @@ class Plant:
             if show_message:
                 print("Age update rejected")
             return
-        self.age = age
+        self._age = age
         if show_message:
-            print(f"Age updated: {self.age} days")
+            print(f"Age updated: {self._age} days")
 
     def get_height(self) -> int:
-        return self.height
+        return self._height
 
     def get_age(self) -> int:
-        return self.age
+        return self._age
 
     def show(self):
-        print(f"{self.name}: {self.height}cm, {self.age} days old")
+        print(f"{self.name}: {self._height}cm, {self._age} days old")
 
 
 if __name__ == "__main__":
     print("=== Garden security system ===")
-    plan = Plant("Rose", 15.0, 10)
-    print(f"Plant created: {plan.name}: {plan.height}cm, {plan.age} days old")
+    Rose = Plant("Rose", 15.0, 10)
+    print(f"Plant created: {Rose.name}: {Rose._height}cm, {Rose._age} days old")
 
     print("")
-    plan.set_height(25)
-    plan.set_age(30)
-    plan.set_height(-10)
-    plan.set_age(-5)
+    Rose.set_height(25)
+    Rose.set_age(30)
+    Rose.set_height(-10)
+    Rose.set_age(-5)
     print("Current state: ", end="")
-    plan.show()
-    
+    Rose.show()
