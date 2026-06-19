@@ -33,6 +33,14 @@ class Plant:
     def age(self):
         self._age += 1
 
+    @staticmethod
+    def is_year_old(age: int) -> bool:
+        return age > 365
+
+    @classmethod
+    def create_anonymous(cls) -> "Plant":
+        return cls("Unknown plant", 0.0, 0)
+
     def show(self):
         print(f"{self.name}: {self._height}cm, {self._age} days old")
 
@@ -53,6 +61,14 @@ class Flower(Plant):
 
     def bloom(self):
         self.is_blooming = True
+
+
+class Seed(Flower):
+    def __init__(self, name: str, height: int, age: int,
+                 color: str, seed_count: int):
+        super().__init__(name, height, age, color)
+        self._seed_count = 0
+        self._bloomed_seed_count = seed_count
 
 
 class Tree(Plant):
