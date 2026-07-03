@@ -1,12 +1,12 @@
 class Plant:
-    def __init__(self, name: str, height: int, age: int) -> None:
+    def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name
-        self._height = 0
+        self._height = 0.0
         self._age = 0
         self.set_height(height, False)
         self.set_age(age, False)
 
-    def set_height(self, height: int, show_message: bool = True) -> None:
+    def set_height(self, height: float, show_message: bool = True) -> None:
         if height < 0:
             print(f"{self.name}: Error, height can't be negative")
             if show_message:
@@ -27,7 +27,7 @@ class Plant:
             print(f"Age updated: {self._age} days")
 
     def grow(self) -> None:
-        self._height += 0.8
+        self._height += 2.1
         self._height = round(self._height, 1)
 
     def age(self) -> None:
@@ -38,7 +38,7 @@ class Plant:
 
 
 class Flower(Plant):
-    def __init__(self, name: str, height: int, age: int, color: str) -> None:
+    def __init__(self, name: str, height: float, age: int, color: str) -> None:
         super().__init__(name, height, age)
         self.color = color
         self.is_blooming = False
@@ -49,14 +49,14 @@ class Flower(Plant):
         if not self.is_blooming:
             print(f"{self.name} has not bloomed yet")
         elif self.is_blooming:
-            print(f"{self.name} is blomming beutifully!")
+            print(f"{self.name} is blooming beautifully!")
 
     def bloom(self) -> None:
         self.is_blooming = True
 
 
 class Tree(Plant):
-    def __init__(self, name: str, height: int, age: int, diameter: int) -> None:
+    def __init__(self, name: str, height: float, age: int, diameter: int) -> None:
         super().__init__(name, height, age)
         self.trunk_diameter = diameter
 
@@ -72,7 +72,7 @@ class Tree(Plant):
 
 
 class Vegetable(Plant):
-    def __init__(self, name: str, height: int, age: int,
+    def __init__(self, name: str, height: float, age: int,
                  season: str, nutrition: int) -> None:
         super().__init__(name, height, age)
         self.harvest_season = season
