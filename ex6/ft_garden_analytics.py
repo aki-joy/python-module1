@@ -35,7 +35,7 @@ class Plant:
     def age(self) -> None:
         self._age += 1
         self._stats.add_age()
-    
+
     def shade(self) -> None:
         self._stats.add_shade()
 
@@ -45,39 +45,41 @@ class Plant:
 
     class Statistics:
         def __init__(self) -> None:
-            self.count_grow = 0
-            self.count_age = 0
-            self.count_show = 0
-            self.count_shade = 0
-        
+            self._count_grow = 0
+            self._count_age = 0
+            self._count_show = 0
+            self._count_shade = 0
+
         def add_grow(self) -> None:
-            self.count_grow += 1
-        
+            self._count_grow += 1
+
         def add_age(self) -> None:
-            self.count_age += 1
-        
+            self._count_age += 1
+
         def add_shade(self) -> None:
-            self.count_shade += 1
+            self._count_shade += 1
 
         def add_show(self) -> None:
-            self.count_show += 1
+            self._count_show += 1
 
         def show_stats(self) -> None:
-            print(f"Stats: {self.count_grow} grow, {self.count_age} age, {self.count_show} show")
-        
+            print(f"Stats: {self._count_grow} grow, {self._count_age} age, "
+                  f"{self._count_show} show")
+
         def show_shade_stats(self) -> None:
-            print(f" {self.count_shade} shade")
-            
+            print(f" {self._count_shade} shade")
+
     def show_statistics(self) -> None:
         self._stats.show_stats()
 
     @staticmethod
     def is_older_than_year(age: int) -> bool:
         return age > 365
-    
+
     @classmethod
     def make_anonymous(cls) -> "Plant":
         return cls("Unknown", 0.0, 0)
+
 
 class Flower(Plant):
     def __init__(self, name: str, height: float, age: int, color: str) -> None:
@@ -112,7 +114,8 @@ class Seed(Flower):
 
 
 class Tree(Plant):
-    def __init__(self, name: str, height: float, age: int, diameter: int) -> None:
+    def __init__(self, name: str, height: float,
+                 age: int, diameter: int) -> None:
         super().__init__(name, height, age)
         self.trunk_diameter = diameter
 
@@ -120,7 +123,12 @@ class Tree(Plant):
         super().show()
         print(f" Trunk diameter: {self.trunk_diameter}cm")
 
+    def show_statistics(self) -> None:
+        super().show_statistics()
+        self._stats.show_shade_stats()
+
     def produce_shade(self) -> None:
+        super().shade()
         print(
             f"Tree {self.name} now produces a shade of "
             f"{self._height}cm long and {self.trunk_diameter}cm wide."
@@ -134,11 +142,17 @@ class Vegetable(Plant):
         self.harvest_season = season
         self.nutritional_value = nutrition
 
+    def grow(self) -> None:
+        super().grow()
+        self.nutritional_value += 1
+
+    def age(self) -> None:
+        super().age()
+
     def grow_and_age(self, days: int) -> None:
         for i in range(0, days):
-            super().grow()
-            super().age()
-            self.nutritional_value += 1
+            self.grow()
+            self.age()
 
     def show(self) -> None:
         super().show()
@@ -146,11 +160,9 @@ class Vegetable(Plant):
         print(f"Nutritional value: {self.nutritional_value}")
 
 
-def display_statistics(plant: Plant, tree: bool) -> None:
+def display_statistics(plant: Plant) -> None:
     print(f"--- Statistics for {plant.name} ---")
     plant.show_statistics()
-    if tree:
-        plant._stats.show_shade_stats()
 
 
 if __name__ == "__main__":
@@ -172,17 +184,14 @@ if __name__ == "__main__":
     flower.show_statistics()
 
     print("\n=== Tree")
-    tree = Tree("Oak", 200.0, 365, 5.0)
+    tree = Tree("Oak", 200.0, 365, 5)
     tree.show()
     print(f"[statistics for {tree.name}]")
     tree.show_statistics()
-    tree._stats.show_shade_stats()
     print("[asking the oak to produce shade]")
     tree.produce_shade()
-    tree.shade()
     print(f"[statistics for {tree.name}]")
     tree.show_statistics()
-    tree._stats.show_shade_stats()
 
     print("\n=== Seed")
     seed = Seed("Sunflower", 80.0, 45, "yellow")

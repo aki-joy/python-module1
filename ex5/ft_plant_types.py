@@ -56,7 +56,8 @@ class Flower(Plant):
 
 
 class Tree(Plant):
-    def __init__(self, name: str, height: float, age: int, diameter: int) -> None:
+    def __init__(self, name: str, height: float,
+                 age: int, diameter: int) -> None:
         super().__init__(name, height, age)
         self.trunk_diameter = diameter
 
@@ -78,11 +79,17 @@ class Vegetable(Plant):
         self.harvest_season = season
         self.nutritional_value = nutrition
 
+    def grow(self) -> None:
+        super().grow()
+        self.nutritional_value += 1
+
+    def age(self) -> None:
+        super().age()
+
     def grow_and_age(self, days: int) -> None:
         for i in range(0, days):
-            super().grow()
-            super().age()
-            self.nutritional_value += 1
+            self.grow()
+            self.age()
 
     def show(self) -> None:
         super().show()
@@ -93,7 +100,7 @@ class Vegetable(Plant):
 if __name__ == "__main__":
     print("=== Garden Plant Types ===")
     flower = Flower("Rose", 15.0, 10, "red")
-    tree = Tree("Oak", 200.0, 365, 5.0)
+    tree = Tree("Oak", 200.0, 365, 5)
     vegetable = Vegetable("Tomato", 5.0, 10, "April", 0)
     print("=== Flower")
     flower.show()
